@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Portfolio Konrada Bałuta — UX Researcher specjalizujący się w e-commerce i omnichannel. Badania użytkowników, testy A/B, testy użyteczności.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konrad Bałut — UX Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700;1,800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #F5F5F3;
+  --ink:      #111111;
+  --ink-mid:  #555555;
+  --ink-dim:  #767676;
+  --white:    #FFFFFF;
+  --blue:     #0047AB;
+  --blue-bg:  #EBF0FA;
+  --line:     #E0E0E0;
+  --hero-bg:  #000000;
+  --f:        'Plus Jakarta Sans', system-ui, sans-serif;
+  --f-mono:   'SFMono-Regular', 'Consolas', 'Liberation Mono', monospace;
+}
+
+/* ─ RESET ─────────────────────────── */
+/* ─ SKIP LINK (WCAG 2.4.1) ─────────── */
+.skip-link {
+  position:absolute; top:-100%; left:24px;
+  background:var(--ink); color:var(--white);
+  padding:10px 18px; font-size:14px; font-weight:600;
+  z-index:200; text-decoration:none; border-radius:0 0 4px 4px;
+  transition:top .2s;
+}
+.skip-link:focus { top:0; }
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; overflow-x:hidden; }
+body { background:var(--bg); color:var(--ink); font-family:var(--f); }
+::selection { background:var(--blue); color:var(--white); }
+a { text-decoration:none; color:inherit; }
+img { display:block; max-width:100%; }
+
+/* ─ LAYOUT ────────────────────────── */
+.wrap { max-width:1160px; margin:0 auto; padding:0 48px; }
+@media(max-width:768px){ .wrap{ padding:0 24px; } }
+
+/* ─ NAV ───────────────────────────── */
+nav {
+  position:sticky; top:0; z-index:100;
+  height:52px;
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+}
+nav .wrap {
+  height:52px;
+  max-width:none;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.nav-logo { font-size:18px; font-weight:500; color:var(--ink); letter-spacing:-.01em; }
+.nav-links { display:flex; gap:28px; align-items:center; }
+.nav-links a { font-size:15px; font-weight:400; color:var(--ink); transition:opacity .2s; }
+.nav-links a:hover { opacity:.5; }
+@media(max-width:600px){ .nav-links a:not(:last-child){ display:none; } }
+
+
+/* ─ MOBILE NAV ──────────────────── */
+.nav-toggle {
+  display:none;
+  background:none; border:none; cursor:pointer;
+  font-size:26px; font-weight:300; color:var(--ink);
+  line-height:1; padding:4px;
+}
+.nav-drawer {
+  display:none;
+  position:fixed;
+  top:52px; left:0; right:0;
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+  flex-direction:column;
+  z-index:99;
+}
+.nav-drawer.open { display:flex; }
+.nav-drawer a {
+  font-size:16px; font-weight:400;
+  color:var(--ink); text-decoration:none;
+  padding:16px 24px;
+  border-bottom:1px solid var(--line);
+  transition:opacity .2s;
+}
+.nav-drawer a:last-child { border-bottom:none; }
+.nav-drawer a:hover { opacity:.45; }
+@media(max-width:640px){
+  .nav-links { display:none; }
+  .nav-toggle { display:block; }
+}
+@media(min-width:641px){
+  .nav-toggle { display:none; }
+  .nav-drawer { display:none !important; }
+}
+
+/* ─ HERO ─────────────────────────────────────────────── */
+.hero {
+  min-height:calc(100dvh - 52px);
+  background:var(--bg);
+  padding:24px 20px 0;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+  z-index:0;
+}
+
+.hero-desc {
+  font-size:15px;
+  font-weight:400;
+  line-height:1.4;
+  color:var(--ink);
+  max-width:320px;
+}
+
+.hero-name {
+  padding:0 0 24px;
+  font-size:clamp(52px, 13vw, 96px);
+  font-weight:800;
+  line-height:0.95;
+  letter-spacing:-.04em;
+  color:var(--ink);
+  display:block;
+}
+
+/* ─ MANIFESTO ────────────────────────────────────────── */
+.hero-manifesto {
+  background:var(--hero-bg);
+  padding:72px 48px 88px;
+  position:relative;
+  z-index:1;
+}
+@media(max-width:768px){ .hero-manifesto{ padding:56px 24px 72px; } }
+.hero-manifesto h1 {
+  font-family:var(--f);
+  font-weight:800;
+  font-size:clamp(36px,4.8vw,72px);
+  line-height:1.08;
+  letter-spacing:-.03em;
+  color:var(--white);
+  max-width:none;
+}
+.hero-manifesto h1 .ch {
+  display:inline-block;
+  opacity:0; transform:translateY(.3em);
+  animation:chUp .4s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero-manifesto h1 .accent { color:#5B9BFF; }
+.hero-manifesto h1 .dot   { color:var(--blue); opacity:0; animation:blink 1.4s steps(1) infinite; }
+@keyframes chUp  { to{ opacity:1; transform:translateY(0); } }
+@keyframes blink { 0%,40%{opacity:1;} 50%,90%{opacity:0;} 100%{opacity:1;} }
+.hero-foot {
+  margin-top:48px; padding-top:20px;
+  border-top:1px solid rgba(255,255,255,.1);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.hero-label {
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.12em;
+  text-transform:uppercase; color:rgba(255,255,255,.55);
+}
+.hero-scroll {
+  font-family:var(--f-mono); font-size:11px; color:rgba(255,255,255,.50);
+  display:flex; align-items:center; gap:6px;
+}
+.hero-scroll span { animation:bob 1.8s ease-in-out infinite; }
+@keyframes bob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(4px);} }
+
+
+/* ─ SKILLS TAB ──────────────────────── */
+.skills-tab { border-bottom:1px solid var(--line); margin-top:0; }
+.skills-head {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:28px 0; cursor:pointer;
+}
+.skills-head:hover .skills-title { opacity:.5; }
+.skills-title {
+  font-weight:500; font-size:clamp(18px,2vw,24px);
+  letter-spacing:-.02em; color:var(--ink); transition:opacity .2s;
+}
+.skills-icon {
+  font-size:20px; font-weight:300; color:var(--ink);
+  width:20px; text-align:center; transition:opacity .2s;
+}
+.skills-head:hover .skills-icon { opacity:.5; }
+.skills-body {
+  display:grid; grid-template-rows:0fr;
+  opacity:0;
+  transition:grid-template-rows .5s cubic-bezier(.16,1,.3,1), opacity .4s ease;
+}
+.skills-body.open { grid-template-rows:1fr; opacity:1; }
+.skills-body-inner { overflow:hidden; }
+.skills-list {
+  display:flex; flex-direction:column; gap:0;
+  padding-bottom:32px;
+}
+.skills-list li {
+  list-style:none;
+  font-size:clamp(14px,1.6vw,18px);
+  color:#3A3A3A;
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+}
+.skills-list li:last-child { border-bottom:none; }
+
+
+/* ─ FOCUS INDICATOR (WCAG 2.4.7) ─── */
+*:focus-visible {
+  outline:2px solid var(--blue);
+  outline-offset:3px;
+  border-radius:2px;
+}
+button:focus-visible,
+a:focus-visible { outline-color:var(--blue); }
+/* ─ SHARED SECTION ────────────────── */
+.s { padding:88px 0; border-bottom:1px solid var(--line); position:relative; z-index:2; background:var(--bg); }
+.cta { position:relative; z-index:2; background:var(--bg); }
+footer { position:relative; z-index:2; background:var(--bg); }
+.s:last-of-type { border-bottom:none; }
+.s-label {
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-dim);
+  margin-bottom:48px;
+  display:flex; align-items:center; gap:10px;
+}
+.s-label::before {
+  content:''; display:block; width:20px; height:1px; background:var(--ink-dim);
+}
+
+/* ─ BIO ───────────────────────────── */
+.bio-grid {
+  display:grid; grid-template-columns:280px 1fr; gap:64px; align-items:start;
+}
+@media(max-width:768px){
+  .bio-grid{ grid-template-columns:1fr; gap:36px; }
+}
+.bio-photo {
+  width:280px;
+  aspect-ratio:3/4;
+  position:relative; overflow:hidden;
+  background:#1A1A1A;
+}
+.bio-photo img {
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+}
+@media(max-width:768px){
+  .bio-photo{
+    width:100%;
+    max-width:360px;
+    aspect-ratio:4/5;
+  }
+}
+.bio-name {
+  font-weight:800; font-size:clamp(24px,3vw,34px);
+  letter-spacing:-.02em; margin-bottom:20px;
+  line-height:1.1;
+}
+.bio-text { font-size:16px; line-height:1.8; color:#3A3A3A; }
+.bio-text p + p { margin-top:16px; }
+
+/* ─ TOOLS ─────────────────────────── */
+.tags { display:flex; flex-wrap:wrap; gap:8px; }
+.tag {
+  font-size:13px; font-weight:500;
+  border:1px solid var(--line); background:var(--white);
+  padding:8px 16px;
+  transition:background .15s, border-color .15s, color .15s;
+}
+.tag:hover { background:var(--ink); border-color:var(--ink); color:var(--white); }
+
+/* ─ CERTS ─────────────────────────── */
+.cert-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); }
+@media(max-width:600px){ .cert-grid{ grid-template-columns:1fr; } }
+.cert-card { background:var(--bg); padding:28px 24px; }
+.cert-name { font-size:15px; font-weight:600; line-height:1.4; margin-bottom:7px; }
+.cert-issuer { font-family:var(--f-mono); font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--blue); }
+
+/* ─ CASE STUDIES ──────────────────── */
+.case-list { margin-top:0; }
+.case { border-top:1px solid var(--line); }
+.case:last-child { border-bottom:1px solid var(--line); }
+
+.case-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:24px;
+  padding:36px 0;
+  cursor:pointer;
+}
+.case-title {
+  font-weight:500;
+  font-size:clamp(18px,1.8vw,24px);
+  letter-spacing:-.02em;
+  line-height:1.3;
+  color:var(--ink);
+  transition:opacity .2s;
+}
+.case-head:hover .case-title { opacity:.6; }
+
+.case-icon {
+  font-size:22px;
+  font-weight:300;
+  color:var(--ink);
+  line-height:1;
+  flex-shrink:0;
+  margin-top:2px;
+  transition:opacity .2s;
+  width:20px;
+  text-align:center;
+}
+.case-head:hover .case-icon { opacity:.5; }
+
+/* open state */
+.case-body-wrap {
+  overflow:hidden;
+  display:grid;
+  grid-template-rows:0fr;
+  opacity:0;
+  transition:grid-template-rows .55s cubic-bezier(.16,1,.3,1), opacity .45s ease;
+}
+.case-body-wrap.open {
+  grid-template-rows:1fr;
+  opacity:1;
+}
+.case-body-inner { overflow:hidden; }
+
+.case-body {
+  padding-bottom:44px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  max-width:760px;
+}
+.cb h4 {
+  font-family:var(--f-mono);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--blue);
+  margin-bottom:7px;
+}
+.cb p, .cb li {
+  font-size:16px;
+  line-height:1.78;
+  color:#3A3A3A;
+}
+.cb ul { margin-left:18px; }
+.cb li { margin-bottom:3px; }
+
+/* ─ IMPACT BOX ────────────────────── */
+.impact {
+  border:1.5px solid var(--blue);
+  background:var(--white);
+  padding:18px 20px;
+  font-size:15px;
+  line-height:1.78;
+  color:var(--ink);
+}
+.impact {
+  /* hidden by default - show class reveals */
+  max-height:0; padding-top:0; padding-bottom:0;
+  border-width:0; overflow:hidden; opacity:0;
+  transition:max-height .55s ease, opacity .45s ease, padding .4s ease, border-width .3s ease;
+}
+.impact.show {
+  max-height:600px; opacity:1;
+  padding-top:18px; padding-bottom:18px;
+  border-width:1.5px;
+}
+.impact h4 {
+  font-family:var(--f-mono);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--blue);
+  margin-bottom:7px;
+}
+
+.q-heading {
+  grid-column:1/-1;
+  font-weight:700; font-size:18px; letter-spacing:-.02em;
+  color:var(--ink); margin-top:28px; margin-bottom:14px;
+  padding-top:24px; border-top:1px solid var(--line);
+}
+/* ─ QUIZ ──────────────────────────── */
+.quiz {
+  grid-column:1/-1; margin-top:24px;
+  border:1px solid var(--line); background:var(--white);
+  padding:24px;
+}
+.q-label { font-family:var(--f-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink); font-weight:600; }
+.q-question { font-weight:700; font-size:20px; margin-top:10px; letter-spacing:-.02em; }
+.q-options { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px; }
+@media(max-width:680px){ .q-options{ grid-template-columns:1fr; } }
+.q-opt {
+  border:1px solid var(--line); background:var(--bg);
+  cursor:pointer; text-align:left; padding:0; overflow:hidden;
+  font-family:var(--f);
+  transition:border-color .18s, transform .18s, box-shadow .18s;
+}
+.q-opt:hover:not([disabled]) { border-color:var(--ink); transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.06); }
+.q-opt svg { width:100%; height:auto; display:block; pointer-events:none; }
+.q-cap {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:11px 14px; font-size:13px; font-weight:500;
+  border-top:1px solid var(--line);
+}
+.q-arrow { font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); transition:.2s; }
+.q-opt:hover:not([disabled]) .q-arrow { color:var(--blue); }
+.q-opt[disabled] { cursor:default; }
+.q-opt.selected { border-color:var(--blue); box-shadow:0 0 0 2px var(--blue-bg); }
+.q-opt.correct  { border-color:#2C9A5C; }
+.q-opt.faded    { opacity:.4; }
+.q-toast {
+  margin-top:16px; display:flex; align-items:center; gap:10px;
+  padding:13px 16px;
+  opacity:0; transform:scale(.96);
+  transition:opacity .22s ease, transform .22s ease;
+  pointer-events:none;
+}
+.q-toast.show { opacity:1; transform:scale(1); }
+.q-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.q-toast.ok  { background:#E8F5EE; } .q-toast.ok  .q-dot { background:#1F7A48; } .q-toast.ok  .q-title { color:#1F7A48; }
+.q-toast.err { background:#F5F5F3; } .q-toast.err .q-dot { background:var(--ink-dim); } .q-toast.err .q-title { color:#444; }
+.q-title { font-weight:700; font-size:16px; letter-spacing:-.01em; }
+.q-sub   { font-size:13px; color:var(--ink-mid); margin-top:1px; }
+
+/* ─ IMPACT REVEAL ─────────────────── */
+
+/* ─ CONTACT ───────────────────────── */
+.cta { padding:120px 0; }
+.cta-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:64px;
+  align-items:start;
+}
+@media(max-width:768px){ .cta-grid{ grid-template-columns:1fr; gap:40px; } }
+.cta h2 {
+  font-weight:800; font-size:clamp(32px,5vw,68px);
+  letter-spacing:-.03em; line-height:1.05; margin:0;
+}
+.cta-right { display:flex; flex-direction:column; gap:28px; padding-top:8px; }
+.cta-item { display:flex; flex-direction:column; gap:5px; }
+.cta-item-label {
+  font-family:var(--f-mono); font-size:10px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-dim);
+}
+.cta-item-value {
+  font-size:16px; font-weight:500; color:var(--ink);
+  text-decoration:none; transition:color .2s;
+  border-bottom:1.5px solid var(--blue); padding-bottom:2px;
+  align-self:flex-start;
+}
+.cta-item-value:hover { color:var(--blue); }
+
+/* ─ FOOTER ────────────────────────── */
+footer {
+  border-top:1px solid var(--line); padding:28px 0;
+}
+footer .wrap { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+.f-copy { font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); }
+
+/* ─ REVEAL ────────────────────────── */
+.rev { opacity:0; transform:translateY(12px); transition:opacity .55s ease, transform .55s ease; }
+.rev.in { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV ──────────────────────────────────────────── -->
+<a href="#main-content" class="skip-link">Przejdź do treści</a>
+<nav>
+  <div class="wrap">
+    <a class="nav-logo" href="#">Konrad Bałut</a>
+    <div class="nav-links">
+      <a href="#about">O mnie</a>
+      <a href="#work">Case studies</a>
+      <a href="#contact">Kontakt</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">+</button>
+  </div>
+</nav>
+
+<div class="nav-drawer" id="nav-drawer">
+  <a href="#about">O mnie</a>
+  <a href="#work">Case studies</a>
+  <a href="#contact">Kontakt</a>
+</div>
+
+<!-- HERO ────────────────────────────────────────────── -->
+<main id="main-content">
+<section class="hero">
+  <p class="hero-desc">UX Researcher<br>based in Poland.</p>
+  <h1 class="hero-name">Konrad&nbsp;Bałut</h1>
+</section>
+
+<!-- MANIFESTO ───────────────────────────────────────── -->
+<div class="hero-manifesto">
+  <h1 id="hl"></h1>
+  <div class="hero-foot">
+    <span class="hero-label">e-commerce & omnichannel</span>
+
+  </div>
+</div>
+
+<!-- BIO ──────────────────────────────────────────── -->
+<section class="s" id="about">
+  <div class="wrap">
+    <div class="s-label">O mnie</div>
+    <div class="bio-grid">
+      <div class="bio-photo rev">
+        <img src="konrad-photo.png" alt="Konrad Bałut — UX Researcher" loading="lazy">
+      </div>
+      <div class="rev">
+        <div class="bio-name">Konrad Bałut</div>
+        <div class="bio-text">
+          <p>Wspieram rozwój marek, prowadząc badania dla e-commerce, aplikacji mobilnych i procesów omnichannel. Współpracowałem z ponad 8 brandami na rynkach europejskich, m.in. Sizeer, JD Sports, 50Style i Militaria.pl.</p>
+          <p>Na co dzień wykorzystuję badania, analitykę i eksperymenty do identyfikowania potrzeb użytkowników oraz szukania możliwości rozwoju produktów. Przekładam insighty na rekomendacje i priorytety, które pomagają zwiększać konwersję, poprawiać doświadczenie klientów i wspierać realizację celów biznesowych.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SKILLS TAB ──────────────────────────────────────── -->
+<div class="skills-tab s-inner">
+  <div class="wrap">
+    <div class="skills-head" id="skills-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="skills-body">
+      <span class="skills-title">Rzeczy, w których jestem dobry:</span>
+      <span class="skills-icon" id="skills-icon">+</span>
+    </div>
+    <div class="skills-body" id="skills-body">
+      <div class="skills-body-inner">
+        <ul class="skills-list">
+          <li>Discovery &amp; research</li>
+          <li>Concept development</li>
+          <li>Product strategy</li>
+          <li>Conversion optimization</li>
+          <li>Cross-functional collaboration</li>
+          <li>Data-driven decision making</li>
+          <li>Stakeholder management</li>
+          <li>Sales funnel analysis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- SKILLS BAD TAB ──────────────────────────────────── -->
+<div class="skills-tab">
+  <div class="wrap">
+    <div class="skills-head" id="skills-bad-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="skills-bad-body">
+      <span class="skills-title">Rzeczy, w których nie jestem dobry:</span>
+      <span class="skills-icon" id="skills-bad-icon">+</span>
+    </div>
+    <div class="skills-body" id="skills-bad-body">
+      <div class="skills-body-inner">
+        <ul class="skills-list">
+          <li>Jazda na rolkach</li>
+          <li>Figma bez komponentów <span style="opacity:.5;font-size:.9em">(kocham html.to.design)</span></li>
+          <li>Sprzedawanie złych pomysłów</li>
+          <li>Byle jakość</li>
+          <li>Dekorowanie ciast</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLS ────────────────────────────────────────── -->
+<section class="s" id="tools">
+  <div class="wrap rev">
+    <div class="s-label">Tech stack</div>
+    <div class="tags">
+      <span class="tag">Maze</span>
+      <span class="tag">Hotjar</span>
+      <span class="tag">GA4</span>
+      <span class="tag">VWO</span>
+      <span class="tag">YourCX</span>
+      <span class="tag">Dovetail</span>
+      <span class="tag">Miro</span>
+      <span class="tag">Jira</span>
+      <span class="tag">Confluence</span>
+      <span class="tag">Claude</span>
+      <span class="tag">Figma</span>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS ────────────────────────────────────────── -->
+<section class="s">
+  <div class="wrap rev">
+    <div class="s-label">Szkolenia i certyfikaty</div>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-name">Audytowanie stron internetowych zgodnie ze standardami WCAG</div>
+        <div class="cert-issuer">Ministerstwo Cyfryzacji</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">AgilePM Foundation</div>
+        <div class="cert-issuer">Certyfikat akredytowany przez APMG</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES ─────────────────────────────────── -->
+<section class="s" id="work">
+  <div class="wrap">
+    <div class="s-label">Case studies</div>
+    <div class="case-list">
+
+      <!-- ── CASE 1 ── -->
+      <article class="case rev">
+        <div class="case-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="case-title">Lojalność nie powinna wymagać instrukcji obsługi — testy użyteczności aplikacji mobilnej</span>
+          <span class="case-icon">+</span>
+        </div>
+        <div class="case-body-wrap"><div class="case-body-inner">
+          <div class="case-body">
+            <div class="cb"><h4>Kontekst</h4><p>Po wdrożeniu aplikacji mobilnej z programem lojalnościowym chcieliśmy sprawdzić, czy klienci rozumieją jego zasady i potrafią korzystać z najważniejszych funkcji bez dodatkowych wyjaśnień.</p></div>
+            <div class="cb"><h4>Jak podszedłem do problemu</h4><p>Przeprowadziłem testy użyteczności z 13 klientami w sklepie flagowym marki. Uczestnicy wyszukiwali produkty, odnajdywali kartę lojalnościową oraz wykonywali zadania związane ze zbieraniem i wykorzystaniem punktów.</p></div>
+            <div class="cb"><h4>Co odkryłem</h4><ul><li>Zasady programu były napisane językiem marketingowym zamiast użytkowym</li><li>Kod QR do skanowania przy kasie znajdował się w miejscu niezgodnym z oczekiwaniami klientów</li><li>Wyniki wyszukiwania nie rozróżniały produktów damskich, męskich i dziecięcych</li></ul></div>
+            <div class="impact"><h4>Wpływ</h4>Uprościliśmy komunikację programu i zastąpiliśmy część treści schematami graficznymi. Kod QR przenieśliśmy do sekcji „Profil", skracając obsługę przy kasie. Test A/B oznaczeń kategorii produktowych na listingach zwiększył konwersję o <b>3,17%</b> oraz CTR o <b>3,1%</b>.</div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- ── CASE 2 ── -->
+      <article class="case rev">
+        <div class="case-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="case-title">Mniej znaczy więcej — test A/B zmiany komunikacji w koszyku</span>
+          <span class="case-icon">+</span>
+        </div>
+        <div class="case-body-wrap"><div class="case-body-inner">
+          <div class="case-body">
+            <div class="cb"><h4>Kontekst</h4><p>Odbiór osobisty był najkorzystniejszą dla firmy formą dostawy, ale użytkownicy wybierali go znacznie rzadziej niż oczekiwano.</p></div>
+            <div class="cb"><h4>Hipoteza</h4><p>Sposób prezentowania dostępności produktu budzi niepewność i zniechęca do wyboru odbioru osobistego.</p></div>
+            <div class="cb"><h4>Warianty</h4><p><b>Wariant A</b> — szczegółowe informacje o dostępności w wybranym salonie.<br><b>Wariant B</b> — prosty komunikat: „Powiadomimy Cię, gdy zamówienie będzie gotowe do odbioru".</p></div>
+
+            <div class="q-heading">Sprawdź się — wybierz wariant i poznaj wyniki!</div>
+            <div class="quiz" data-correct="B">
+              <div class="q-options">
+                <button class="q-opt" data-v="A" aria-label="Wybierz wariant A"><svg viewBox="0 0 480 340" xmlns="http://www.w3.org/2000/svg"><rect width="480" height="340" fill="#F5F5F3"/><text x="24" y="28" font-family="sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#999">WARIANT A</text><rect x="24" y="42" width="432" height="272" rx="3" fill="#fff" stroke="#E0E0E0"/><text x="44" y="78" font-family="sans-serif" font-size="13" font-weight="600" fill="#111">Wybierz sposób dostawy</text><rect x="44" y="94" width="392" height="68" rx="2" fill="#F5F5F3" stroke="#E0E0E0" stroke-width="1.5"/><circle cx="62" cy="128" r="7" fill="none" stroke="#CCC" stroke-width="1.5"/><text x="78" y="118" font-family="sans-serif" font-size="12" font-weight="600" fill="#111">Odbiór osobisty — Kraków, ul. Długa 12</text><text x="78" y="137" font-family="sans-serif" font-size="11" fill="#999">Niedostępny. Stan: 0 szt. w salonie, 3 szt. w magazynie — 2-4 dni</text><rect x="44" y="174" width="392" height="46" rx="2" fill="#F5F5F3" stroke="#E0E0E0"/><circle cx="62" cy="197" r="7" fill="none" stroke="#CCC" stroke-width="1.5"/><text x="78" y="193" font-family="sans-serif" font-size="12" font-weight="600" fill="#111">Kurier — 1-2 dni robocze · 19,99 zł</text><rect x="44" y="234" width="148" height="36" rx="2" fill="#111"/><text x="118" y="257" font-family="sans-serif" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">Przejdź do kasy</text></svg><span class="q-cap">Wariant A <span class="q-arrow">→</span></span></button>
+                <button class="q-opt" data-v="B" aria-label="Wybierz wariant B"><svg viewBox="0 0 480 340" xmlns="http://www.w3.org/2000/svg"><rect width="480" height="340" fill="#F5F5F3"/><text x="24" y="28" font-family="sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#999">WARIANT B</text><rect x="24" y="42" width="432" height="272" rx="3" fill="#fff" stroke="#E0E0E0"/><text x="44" y="78" font-family="sans-serif" font-size="13" font-weight="600" fill="#111">Wybierz sposób dostawy</text><rect x="44" y="94" width="392" height="54" rx="2" fill="#F5F5F3" stroke="#E0E0E0" stroke-width="1.5"/><circle cx="62" cy="121" r="7" fill="none" stroke="#CCC" stroke-width="1.5"/><text x="78" y="117" font-family="sans-serif" font-size="12" font-weight="600" fill="#111">Odbiór osobisty — Kraków, ul. Długa 12 · 0 zł</text><text x="78" y="136" font-family="sans-serif" font-size="11" fill="#999">Powiadomimy Cię, gdy zamówienie będzie gotowe do odbioru</text><rect x="44" y="160" width="392" height="46" rx="2" fill="#F5F5F3" stroke="#E0E0E0"/><circle cx="62" cy="183" r="7" fill="none" stroke="#CCC" stroke-width="1.5"/><text x="78" y="179" font-family="sans-serif" font-size="12" font-weight="600" fill="#111">Kurier — 1-2 dni robocze · 19,99 zł</text><rect x="44" y="220" width="148" height="36" rx="2" fill="#111"/><text x="118" y="243" font-family="sans-serif" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">Przejdź do kasy</text></svg><span class="q-cap">Wariant B <span class="q-arrow">→</span></span></button>
+              </div>
+              <div class="q-toast"><span class="q-dot"></span><div><div class="q-title"></div><div class="q-sub"></div></div></div>
+            </div>
+            <div class="impact qhidden"><h4>Wpływ</h4>Uproszczony wariant zwiększył udział zamówień z odbiorem osobistym o <b>1,88%</b> oraz ograniczył liczbę porzuceń koszyka na etapie wyboru dostawy.</div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- ── CASE 3 ── -->
+      <article class="case rev">
+        <div class="case-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="case-title">Zwrot zaczyna się przed zakupem — test A/B social proof</span>
+          <span class="case-icon">+</span>
+        </div>
+        <div class="case-body-wrap"><div class="case-body-inner">
+          <div class="case-body">
+            <div class="cb"><h4>Kontekst</h4><p>Zwroty należały do najważniejszych kosztów operacyjnych w kategorii obuwia i odzieży. Analiza danych wykazała, że jednym z najczęstszych powodów zwrotu było niedopasowanie rozmiaru.</p></div>
+            <div class="cb"><h4>Hipoteza</h4><p>Informacja o dopasowaniu oparta na opiniach potwierdzonych zakupem innych klientów zwiększy pewność decyzji zakupowej i przełoży się na zmniejszenie liczby zwrotów.</p></div>
+            <div class="cb"><h4>Warianty</h4><p><b>Wariant A</b> — standardowa lista rozmiarów.<br><b>Wariant B</b> — widget z rekomendacją dopasowania oparty na opiniach klientów.</p></div>
+
+            <div class="q-heading">Sprawdź się — wybierz wariant i poznaj wyniki!</div>
+            <div class="quiz" data-correct="B">
+              <div class="q-options">
+                <button class="q-opt" data-v="A" aria-label="Wybierz wariant A"><svg viewBox="0 0 320 420" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="420" fill="#F5F5F3"/><text x="20" y="26" font-family="sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#999">WARIANT A</text><rect x="20" y="40" width="280" height="364" rx="3" fill="#fff" stroke="#E0E0E0"/><rect x="20" y="40" width="280" height="180" fill="#EBEBEB"/><path d="M100 156 L138 108 L178 142 L212 94" stroke="#CCC" stroke-width="2.5" fill="none" stroke-linecap="round"/><text x="38" y="252" font-family="sans-serif" font-size="13" font-weight="600" fill="#111">Buty sportowe XYZ</text><text x="38" y="272" font-family="sans-serif" font-size="14" font-weight="700" fill="#111">299,99 zł</text><text x="38" y="298" font-family="sans-serif" font-size="11" fill="#555">Wybierz rozmiar</text><rect x="38" y="308" width="44" height="28" rx="2" fill="#fff" stroke="#DDD"/><text x="60" y="326" font-family="sans-serif" font-size="11" fill="#111" text-anchor="middle">38½</text><rect x="88" y="308" width="44" height="28" rx="2" fill="#fff" stroke="#DDD"/><text x="110" y="326" font-family="sans-serif" font-size="11" fill="#111" text-anchor="middle">39</text><rect x="138" y="308" width="44" height="28" rx="2" fill="#fff" stroke="#DDD"/><text x="160" y="326" font-family="sans-serif" font-size="11" fill="#111" text-anchor="middle">39½</text><rect x="38" y="356" width="248" height="34" rx="2" fill="#111"/><text x="162" y="378" font-family="sans-serif" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">Dodaj do koszyka</text></svg><span class="q-cap">Wariant A <span class="q-arrow">→</span></span></button>
+                <button class="q-opt" data-v="B" aria-label="Wybierz wariant B"><svg viewBox="0 0 320 420" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="420" fill="#F5F5F3"/><text x="20" y="26" font-family="sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#999">WARIANT B</text><rect x="20" y="40" width="280" height="364" rx="3" fill="#fff" stroke="#E0E0E0"/><rect x="20" y="40" width="280" height="180" fill="#EBEBEB"/><path d="M100 156 L138 108 L178 142 L212 94" stroke="#CCC" stroke-width="2.5" fill="none" stroke-linecap="round"/><text x="38" y="252" font-family="sans-serif" font-size="13" font-weight="600" fill="#111">Buty sportowe XYZ</text><text x="38" y="272" font-family="sans-serif" font-size="14" font-weight="700" fill="#111">299,99 zł</text><text x="38" y="296" font-family="sans-serif" font-size="11" fill="#555">Wybierz rozmiar</text><rect x="38" y="304" width="248" height="30" rx="2" fill="#EBF0FA" stroke="#0047AB"/><text x="48" y="318" font-family="sans-serif" font-size="11" font-weight="600" fill="#0047AB">Zalecamy standardowy rozmiar</text><text x="48" y="330" font-family="sans-serif" font-size="10" fill="#888">na podstawie opinii klientów</text><rect x="38" y="344" width="44" height="28" rx="2" fill="#fff" stroke="#DDD"/><text x="60" y="362" font-family="sans-serif" font-size="11" fill="#111" text-anchor="middle">38½</text><rect x="88" y="344" width="44" height="28" rx="2" fill="#111"/><text x="110" y="362" font-family="sans-serif" font-size="11" fill="#fff" text-anchor="middle">39</text><rect x="138" y="344" width="44" height="28" rx="2" fill="#fff" stroke="#DDD"/><text x="160" y="362" font-family="sans-serif" font-size="11" fill="#111" text-anchor="middle">39½</text></svg><span class="q-cap">Wariant B <span class="q-arrow">→</span></span></button>
+              </div>
+              <div class="q-toast"><span class="q-dot"></span><div><div class="q-title"></div><div class="q-sub"></div></div></div>
+            </div>
+            <div class="impact qhidden"><h4>Wpływ</h4>Nowy widget zwiększył konwersję o <b>1,81%</b> oraz przyczynił się do spadku liczby zwrotów z niedopasowania rozmiaru w ciągu 30 dni od zakupu.</div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- ── CASE 6 ── -->
+      <article class="case rev">
+        <div class="case-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="case-title">Małe zmiany, duże liczby — test A/B dodania logotypów brandów na listingu produktowym</span>
+          <span class="case-icon">+</span>
+        </div>
+        <div class="case-body-wrap"><div class="case-body-inner">
+          <div class="case-body">
+              <div class="cb"><h4>Kontekst</h4><p>W sklepie multibrandowym kafelki produktowe od lat prezentowały jedynie zdjęcie, nazwę i cenę. Hipoteza: eksponowanie marki na listingu może zwiększyć zaufanie i ułatwić decyzje zakupowe.</p></div>
+              <div class="cb"><h4>Hipoteza</h4><p>Dodanie logotypu marki do kafelka produktowego zwiększy widoczność brandu, a w konsekwencji przełoży się na wyższą konwersję.</p></div>
+              <div class="cb"><h4>Metoda</h4><p>Test A/B na ruchu desktopowym i mobilnym. W wariancie testowym logotyp marki umieszczono nad nazwą produktu. Analiza wpływu na konwersję i przychód.</p></div>
+              <div class="cb"><h4>Insight</h4><p>Widoczna identyfikacja marki okazała się istotnym sygnałem zaufania czytelnym w ułamku sekundy skanowania listingu.</p></div>
+
+            <div class="q-heading">Sprawdź się — wybierz wariant i poznaj wyniki!</div>
+            <div class="quiz" data-correct="B">
+              <div class="q-options">
+                <button class="q-opt" data-v="A" aria-label="Wybierz wariant A"><svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg"><rect width="520" height="300" fill="#F5F5F3"/><text x="20" y="24" font-family="sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#999">WARIANT A</text><rect x="20" y="36" width="226" height="248" rx="3" fill="#fff" stroke="#E0E0E0"/><rect x="20" y="36" width="226" height="165" fill="#EBEBEB"/><path d="M80 148 L112 108 L148 138 L182 92" stroke="#CCC" stroke-width="2.5" fill="none" stroke-linecap="round"/><text x="36" y="224" font-family="sans-serif" font-size="12" font-weight="500" fill="#111">Sneakersy X-Runner</text><text x="36" y="244" font-family="sans-serif" font-size="13" font-weight="700" fill="#111">399,99 zł</text><rect x="274" y="36" width="226" height="248" rx="3" fill="#fff" stroke="#E0E0E0"/><rect x="274" y="36" width="226" height="165" fill="#EBEBEB"/><path d="M334 148 L366 108 L402 138 L436 92" stroke="#CCC" stroke-width="2.5" fill="none" stroke-linecap="round"/><text x="290" y="224" font-family="sans-serif" font-size="12" font-weight="500" fill="#111">Buty trekkingowe Trail</text><text x="290" y="244" font-family="sans-serif" font-size="13" font-weight="700" fill="#111">549,00 zł</text></svg><span class="q-cap">Wariant A — bez logotypu <span class="q-arrow">→</span></span></button>
+                <button class="q-opt" data-v="B" aria-label="Wybierz wariant B"><svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg"><rect width="520" height="300" fill="#F5F5F3"/><text x="20" y="24" font-family="sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#999">WARIANT B</text><rect x="20" y="36" width="226" height="248" rx="3" fill="#fff" stroke="#E0E0E0"/><rect x="20" y="36" width="226" height="165" fill="#EBEBEB"/><path d="M80 148 L112 108 L148 138 L182 92" stroke="#CCC" stroke-width="2.5" fill="none" stroke-linecap="round"/><rect x="36" y="210" width="54" height="14" rx="2" fill="#111"/><text x="63" y="221" font-family="sans-serif" font-size="8" font-weight="700" fill="#fff" text-anchor="middle">RUNFIT</text><text x="36" y="238" font-family="sans-serif" font-size="12" font-weight="500" fill="#111">X-Runner Classic</text><text x="36" y="256" font-family="sans-serif" font-size="13" font-weight="700" fill="#111">399,99 zł</text><rect x="274" y="36" width="226" height="248" rx="3" fill="#fff" stroke="#E0E0E0"/><rect x="274" y="36" width="226" height="165" fill="#EBEBEB"/><path d="M334 148 L366 108 L402 138 L436 92" stroke="#CCC" stroke-width="2.5" fill="none" stroke-linecap="round"/><rect x="290" y="210" width="62" height="14" rx="2" fill="#111"/><text x="321" y="221" font-family="sans-serif" font-size="8" font-weight="700" fill="#fff" text-anchor="middle">TRAILGO</text><text x="290" y="238" font-family="sans-serif" font-size="12" font-weight="500" fill="#111">Trail Pro</text><text x="290" y="256" font-family="sans-serif" font-size="13" font-weight="700" fill="#111">549,00 zł</text></svg><span class="q-cap">Wariant B — z logotypem <span class="q-arrow">→</span></span></button>
+              </div>
+              <div class="q-toast"><span class="q-dot"></span><div><div class="q-title"></div><div class="q-sub"></div></div></div>
+            </div>
+            <div class="impact qhidden"><h4>Wpływ</h4>Wariant z logotypami zwiększył konwersję o <b>26,66%</b> na desktopie i <b>11,21%</b> na mobile — łącznie <b>15,34%</b> przy istotności statystycznej 99%. Wdrożono na 100% ruchu.</div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- ── CASE 7 ── -->
+      <article class="case rev">
+        <div class="case-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="case-title">Problemem nie był produkt — badania wewnętrznej aplikacji</span>
+          <span class="case-icon">+</span>
+        </div>
+        <div class="case-body-wrap"><div class="case-body-inner">
+          <div class="case-body">
+            <div class="cb"><h4>Kontekst</h4><p>Wewnętrzna aplikacja mobilna dla sprzedawców w sklepach stacjonarnych służyła do sprawdzania stanów magazynowych, przyjmowania dostaw, drukowania etykiet i generowania raportów sprzedażowych. Obecna była w organizacji od lat, ale dane wskazywały na niskie wykorzystanie — przy jednoczesnym braku zgłaszanych problemów.</p></div>
+            <div class="cb"><h4>Jak podszedłem do problemu</h4><p>Przeprowadziłem wywiady i obserwacje pracy doradców sprzedaży w salonach.</p></div>
+            <div class="cb"><h4>Co odkryłem</h4><p>Największą barierą nie był interfejs, ale wiedza. Pracownicy zgłaszali brak funkcji, które już istniały. Wiedza o narzędziu była przekazywana nieformalnie, a proces generowania raportów pozostawał niezrozumiały dla większości użytkowników.</p></div>
+            <div class="impact"><h4>Wpływ</h4>Opracowałem rekomendacje UX/UI dla kluczowych modułów, we współpracy z UI designerem przygotowałem UI Kit wspierający dalszy rozwój produktu oraz wskazałem onboarding jako krytyczny element adopcji. <b>Problem okazał się organizacyjny, nie technologiczny.</b></div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- ── CASE 8 ── -->
+      <article class="case rev">
+        <div class="case-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="case-title">Pięć minut za długo — optymalizacja rejestracji w sklepie stacjonarnym</span>
+          <span class="case-icon">+</span>
+        </div>
+        <div class="case-body-wrap"><div class="case-body-inner">
+          <div class="case-body">
+            <div class="cb"><h4>Kontekst</h4><p>Sieć salonów obserwowała niski odsetek nowych rejestracji do programu lojalnościowego w sklepach stacjonarnych. Proces wymagał pobrania aplikacji, wypełnienia formularza i aktywacji konta przez e-mail — wszystko przy kasie, często przy słabym zasięgu lub niestabilnym Wi-Fi.</p></div>
+            <div class="cb"><h4>Problem</h4><p>Każdy dodatkowy krok wydłużał obsługę i zwiększał ryzyko rezygnacji. Zarówno klienci, jak i pracownicy traktowali rejestrację jako przeszkodę, a nie wartość dodaną.</p></div>
+            <div class="cb"><h4>Jak podszedłem do problemu</h4><p>Przeprowadziłem obserwacje pracy w salonach oraz wywiady z pracownikami. Następnie przeanalizowałem cały proces wspólnie z zespołami CRM, IT i prawnym, aby zidentyfikować elementy możliwe do uproszczenia bez naruszania wymagań biznesowych i regulacyjnych.</p></div>
+            <div class="cb"><h4>Co odkryłem</h4><ul><li>Aktywacja przez e-mail często nie dochodziła do skutku podczas wizyty w sklepie ze względu na problemy sieciowe w galeriach handlowych</li><li>Formularz wymagał danych, które nie były wykorzystywane w dalszym procesie</li><li>Pracownicy nie mieli narzędzi wspierających rejestrację po swojej stronie</li></ul></div>
+            <div class="cb"><h4>Rozwiązanie</h4><p>Zaprojektowałem proces rejestracji realizowany bezpośrednio przez sprzedawcę w systemie POS. Do założenia konta wystarczały imię i adres e-mail. Punkty były naliczane od razu, ale pozostawały nieaktywne do momentu potwierdzenia konta przez klienta. Niepotwierdzone dane były automatycznie usuwane po określonym czasie.</p></div>
+            <div class="impact"><h4>Wpływ</h4>Powstała kompletna koncepcja produktu obejmująca nowy proces, wymagania biznesowe, ograniczenia prawne oraz zestaw mierników sukcesu — liczba rejestracji, współczynnik aktywacji i odsetek porzuceń. Projekt uzyskał pozytywną ocenę zespołów CRM, IT i Legal jako możliwy do wdrożenia.</div>
+          </div>
+        </div></div>
+      </article>
+
+      <!-- ── CASE 9 ── -->
+      <article class="case rev">
+        <div class="case-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="case-title">Od funkcji do potrzeby użytkownika — wdrożenie sekcji inspiracji</span>
+          <span class="case-icon">+</span>
+        </div>
+        <div class="case-body-wrap"><div class="case-body-inner">
+          <div class="case-body">
+            <div class="cb"><h4>Kontekst</h4><p>Aplikacja mobilna dużej sieci retail oferowała funkcję wirtualnej przymierzalni. Mimo kosztownego wdrożenia korzystała z niej niewielka grupa użytkowników. Zamiast zastanawiać się, jak poprawić funkcję, postawiłem pytanie: czy rozwiązuje właściwy problem?</p></div>
+            <div class="cb"><h4>Jak podszedłem do problemu</h4><p>Przeanalizowałem dane dotyczące zachowań użytkowników oraz ścieżek zakupowych w innych produktach z portfolio firmy. Skupiłem się na momentach poprzedzających decyzję zakupową i sposobach, w jakie użytkownicy szukają inspiracji.</p></div>
+            <div class="cb"><h4>Co odkryłem</h4><p>Problemem nie był interfejs ani jakość technologii. Użytkownicy rzadko chcieli „przymierzać" produkty cyfrowo. Znacznie częściej szukali inspiracji i potwierdzenia, jak dany produkt wygląda w rzeczywistym użyciu. Wiarygodniejszym źródłem były dla nich materiały tworzone przez influencerów niż generowane wizualizacje.</p></div>
+            <div class="cb"><h4>Rozwiązanie</h4><p>Zaproponowałem zastąpienie dalszego rozwoju wirtualnej przymierzalni sekcją inspiracji opartą na materiałach influencerów — moduł na stronie głównej, przejście z inspiracji bezpośrednio do produktu, powiązanie treści z katalogiem produktowym.</p></div>
+            <div class="impact"><h4>Wpływ</h4>Przygotowałem koncepcję produktu z frameworkiem mierników: CTR, przejścia do kart produktowych, konwersja i średnia wartość zamówienia. Najważniejszym efektem było <b>zakwestionowanie kierunku rozwoju istniejącej funkcji</b> i wskazanie alternatywy lepiej odpowiadającej rzeczywistym zachowaniom użytkowników.</div>
+          </div>
+        </div></div>
+      </article>
+
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT ──────────────────────────────────────── -->
+<section class="cta s" id="contact">
+  <div class="wrap rev">
+    <div class="cta-grid">
+      <h2>Dobra współpraca zaczyna się od jednego kliknięcia.</h2>
+      <div class="cta-right">
+        <div class="cta-item">
+          <span class="cta-item-label">Mail</span>
+          <a class="cta-item-value" href="mailto:konrad.balut98@gmail.com">konrad.balut98@gmail.com</a>
+        </div>
+        <div class="cta-item">
+          <span class="cta-item-label">Tel</span>
+          <a class="cta-item-value" href="tel:+48783667821">783 667 821</a>
+        </div>
+        <div class="cta-item">
+          <span class="cta-item-label">LinkedIn</span>
+          <a class="cta-item-value" href="https://pl.linkedin.com/in/konradbalut" target="_blank" rel="noopener">konradbalut ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="f-copy">© 2026 Konrad Bałut</span>
+    <span class="f-copy">UX Researcher · E-commerce & Omnichannel</span>
+  </div>
+</footer>
+
+<script>
+// ── MOBILE MENU ───────────────────────────────────────
+(function(){
+  var toggle = document.getElementById('nav-toggle');
+  var drawer = document.getElementById('nav-drawer');
+  if(!toggle || !drawer) return;
+  var isOpen = false;
+  function close(){
+    isOpen = false;
+    drawer.classList.remove('open');
+    toggle.textContent = '+';
+    toggle.setAttribute('aria-expanded','false');
+  }
+  toggle.addEventListener('click', function(){
+    isOpen = !isOpen;
+    drawer.classList.toggle('open', isOpen);
+    toggle.textContent = isOpen ? '×' : '+';
+    toggle.setAttribute('aria-expanded', isOpen);
+  });
+  drawer.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', close);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape') close();
+  });
+})();
+
+// ── FIT name to full viewport width ──────────────────
+(function(){
+  var el = document.getElementById('hero-name');
+  if(!el) return;
+  function fit(){
+    var cs    = getComputedStyle(el);
+    var padL  = parseFloat(cs.paddingLeft)  || 48;
+    var padR  = parseFloat(cs.paddingRight) || 48;
+    var avail = window.innerWidth - padL - padR;
+    var probe = document.createElement('span');
+    probe.textContent = el.textContent;
+    probe.style.cssText =
+      'position:fixed;top:-9999px;left:-9999px;' +
+      'visibility:hidden;white-space:nowrap;display:inline-block;' +
+      'font-size:100px;' +
+      'font-family:'    + cs.fontFamily    + ';' +
+      'font-weight:'    + cs.fontWeight    + ';' +
+      'letter-spacing:' + cs.letterSpacing + ';';
+    document.body.appendChild(probe);
+    var w = probe.getBoundingClientRect().width;
+    document.body.removeChild(probe);
+    if(w > 0) el.style.fontSize = (avail / w * 100 * 0.91) + 'px';
+  }
+  fit();
+  setTimeout(fit, 200);
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ fit(); setTimeout(fit, 100); });
+  }
+  window.addEventListener('resize', fit, {passive:true});
+})();
+
+// ── MANIFESTO: letter by letter ───────────────────────
+(function(){
+  const words=[
+    {t:'Ever'},{t:'Since'},{t:'I'},{t:'Was'},{t:'Young'},{t:'I'},{t:'Wanted'},{t:'To'},{t:'Transform'},
+    {t:'Unstructured',a:true},{t:'Data',a:true},
+    {t:'Into'},{t:'Actionable'},{t:'Business'},{t:'Insights'}
+  ];
+  const h1=document.getElementById('hl'); if(!h1) return;
+  let d=0; const step=0.016;
+  words.forEach((w,wi)=>{
+    const wrap=document.createElement('span'); wrap.style.display='inline-block';
+    if(w.a) wrap.style.color='var(--blue)';
+    [...w.t].forEach(ch=>{
+      const s=document.createElement('span'); s.className='ch';
+      s.textContent=ch; s.style.animationDelay=d+'s'; d+=step; wrap.appendChild(s);
+    });
+    h1.appendChild(wrap);
+    if(wi<words.length-1) h1.appendChild(document.createTextNode('\u00A0'));
+  });
+  const dot=document.createElement('span'); dot.className='dot';
+  dot.textContent='.'; dot.style.animationDelay=(d+.25)+'s'; h1.appendChild(dot);
+})();
+
+
+
+// ── REVEAL on scroll ─────────────────────────────────
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+},{threshold:.1});
+document.querySelectorAll('.rev').forEach(el=>io.observe(el));
+
+// ── CASE STUDIES accordion ───────────────────────────
+document.querySelectorAll('.case').forEach((cas)=>{
+  const head=cas.querySelector('.case-head');
+  const wrap=cas.querySelector('.case-body-wrap');
+  const icon=cas.querySelector('.case-icon');
+  if(!head||!wrap) return;
+  head.addEventListener('click',()=>{
+    const isOpen=wrap.classList.toggle('open');
+    if(icon) icon.textContent=isOpen?'—':'+';
+    head.setAttribute('aria-expanded', isOpen);
+  });
+  head.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); head.click(); }
+  });
+});
+
+// ── QUIZ ──────────────────────────────────────────────
+document.querySelectorAll('.quiz').forEach(function(q){
+  var correct = q.dataset.correct;
+  var opts    = q.querySelectorAll('.q-opt');
+  var toast   = q.querySelector('.q-toast');
+  var impact  = q.nextElementSibling; // impact.qhidden sits right after quiz
+  var done    = false;
+
+  opts.forEach(function(opt){
+    opt.addEventListener('click', function(){
+      if(done) return;
+      done = true;
+      var ok = opt.dataset.v === correct;
+
+      opts.forEach(function(o){
+        o.disabled = true;
+        if(o === opt) o.classList.add('selected');
+        else          o.classList.add('faded');
+        if(o.dataset.v === correct) o.classList.add('correct');
+      });
+
+      var titleEl = toast.querySelector('.q-title');
+      var subEl   = toast.querySelector('.q-sub');
+      if(titleEl) titleEl.textContent = ok ? 'Racja!' : 'Pudło!';
+      if(subEl)   subEl.textContent   = ok
+        ? 'Wariant ' + correct + ' rzeczywiście wygrał test.'
+        : 'Wygrał wariant ' + correct + '. Sprawdź, dlaczego wypadł lepiej.';
+
+      toast.classList.add(ok ? 'ok' : 'err');
+      void toast.offsetWidth; // trigger reflow for transition
+      toast.classList.add('show');
+
+      if(impact && impact.classList.contains('qhidden')){
+        setTimeout(function(){
+          impact.classList.remove('qhidden');
+          impact.classList.add('show');
+        }, 700);
+      }
+    });
+  });
+});
+
+// ── SKILLS TAB ────────────────────────────────────────
+(function(){
+  var head = document.getElementById('skills-toggle');
+  var body = document.getElementById('skills-body');
+  var icon = document.getElementById('skills-icon');
+  if(!head || !body) return;
+  head.addEventListener('click', function(){
+    var open = body.classList.toggle('open');
+    icon.textContent = open ? '—' : '+';
+  });
+})();
+
+// ── SKILLS BAD TAB ────────────────────────────────────
+(function(){
+  var head = document.getElementById('skills-bad-toggle');
+  var body = document.getElementById('skills-bad-body');
+  var icon = document.getElementById('skills-bad-icon');
+  if(!head || !body) return;
+  head.addEventListener('click', function(){
+    var open = body.classList.toggle('open');
+    icon.textContent = open ? '—' : '+';
+  });
+})();
+</script>
+</body>
+</html>
